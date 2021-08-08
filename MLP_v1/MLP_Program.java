@@ -14,6 +14,9 @@ public class MLP_Program {
 
     private static MLP perceptron;
 
+    // Remove old .class files: rm *.class
+    //            Compile with: javac MLP_Program.java
+    //                Run with: java MLP_Program 
 
     public static void main(String[] args) {
         System.out.println("\nBuilding training and testing sets...");
@@ -57,7 +60,6 @@ public class MLP_Program {
     }
 
 
-
     private static ConfusionMatrix executeTrainingEpoch() {
         ConfusionMatrix matrix = new ConfusionMatrix(OUTPUT_LAYER_SIZE);
         for(Input input : trainingSet) {
@@ -81,7 +83,6 @@ public class MLP_Program {
         }
         return matrix;
     } 
-    
 
 
     private static int getPredictedLabel(double[] preditedVector) {
