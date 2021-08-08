@@ -18,7 +18,7 @@ public class ImageParser {
         for(int signValue = 0; signValue < 26; ++signValue) {
             File folder = new File(imagesFolderPath + "/" + signValue);
             for(File currentFile : folder.listFiles()) {
-                double[] imageData = getArrayFromImage(downsizeImage(parseImageFromFile(currentFile)));
+                double[] imageData = getArrayFromMatrix(downsizeImage(parseImageFromFile(currentFile)));
                 inputList.add(new Input(imageData, signValue));
             }
         }
@@ -75,13 +75,29 @@ public class ImageParser {
     }
 
 
-    private double[] getArrayFromImage(double[][] imageMatrix) {
-        double[] toReturn = new double[imageMatrix.length * imageMatrix[0].length];
+    public double[] getArrayFromMatrix(double[][] imageMatrix) {
+        double[] array = new double[imageMatrix.length * imageMatrix[0].length];
+        int indexCount = 0;
         for(int rowIndex = 0; rowIndex < imageMatrix.length; ++rowIndex) {
             for(int columnIndex = 0; columnIndex < imageMatrix[0].length; ++columnIndex) {
-                toReturn[rowIndex + columnIndex] = imageMatrix[rowIndex][columnIndex];
+                array[indexCount] = imageMatrix[rowIndex][columnIndex];
+                ++indexCount;
             }
         }
-        return toReturn;
+        return array;
+    }
+
+
+    public double[][] getMatrixFromArray(double[] imageArray) {
+        int dimension = (int)Math.sqrt(imageArray.length);
+        double[][] matrix = new double[dimension][dimension];
+        int indexCount = 0;
+        for(int rowIndex = 0; rowIndex < dimension; ++rowIndex) {
+            for(int columnIndex = 0; columnIndex < dimension; ++columnIndex) {
+                matrix[rowIndex][columnIndex] = imageArray[indexCount];
+                ++indexCount;
+            }
+        }
+        return matrix;
     }
 }
