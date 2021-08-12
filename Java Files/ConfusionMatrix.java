@@ -1,3 +1,7 @@
+
+/**
+ * Responsible for managing a confusion matrix.
+ */
 public class ConfusionMatrix {
     
     private int[][] matrix;

@@ -1,6 +1,8 @@
 import java.util.*;
 
-
+/**
+ * Responsible for managing a mulit-later perceptron.
+ */
 public class MLP implements Network {
 
     private final boolean MOMENTUM_ENABLED = false;

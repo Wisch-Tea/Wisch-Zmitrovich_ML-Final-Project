@@ -1,6 +1,9 @@
 import java.util.*;
 
-
+/**
+ * Responsble for managing a filter.
+ * The CNN houses multiple filters.
+ */
 public class Filter {
 
     double[][] filterMatrix;

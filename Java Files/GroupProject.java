@@ -28,16 +28,19 @@ public class GroupProject {
             if(arg.toUpperCase().equals("MLP")) {
                 System.out.println("\nBeginning MLP execution...");
                 executeEpochs(new MLP(INPUT_LAYER_SIZE, HIDDEN_LAYER_SIZE, OUTPUT_LAYER_SIZE));
-                System.out.println("\nFinished MLP execution.");
+                System.out.println("\nFinished MLP execution.\n");
             } else if(arg.toUpperCase().equals("CNN")) {
                 System.out.println("\nBeginning CNN execution...");
                 executeEpochs(new CNN(INPUT_LAYER_SIZE, HIDDEN_LAYER_SIZE, OUTPUT_LAYER_SIZE, getFilterSet()));
-                System.out.println("\nFinished CNN execution.");
+                System.out.println("\nFinished CNN execution.\n");
             }
         }
     }
 
-
+    /**
+     * Sets up the training and testing sets.
+     * Uses ImageParser to parse date from archive/signs.
+     */
     private static void initializeTrainingAndTestingSets() {
         Input[] inputs = new ImageParser().parseImages(IMAGES_FOLDER_PATH);
         Vector<Input> inputList = new Vector<>(inputs.length);
@@ -49,14 +52,21 @@ public class GroupProject {
         trainingSet = inputList.toArray(new Input[inputList.size()]);
     }
 
-
+    /**
+     * Randomizes the order of a list of inputs.
+     * @param inputs The list of inputs to randomize.
+     * @return The randomized list of inputs.
+     */
     private static Input[] randomizeInputs(Input[] inputs) {
         List<Input> inputList = Arrays.asList(inputs);
         Collections.shuffle(inputList);
         return inputList.toArray(new Input[inputList.size()]);
     }
 
-
+    /**
+     * Generates a set of filters for a CNN.
+     * @return A list of filters.
+     */
     private static Filter[] getFilterSet() {
         Vector<double[][]> filterMatrices = new Vector<>(4);
         filterMatrices.add(new double[][] {{0,0,0}, 
@@ -78,7 +88,10 @@ public class GroupProject {
         return filterSet;
     }
 
-
+    /**
+     * Execute the epochs over a network.
+     * @param network The network to run through the epochs.
+     */
     private static void executeEpochs(Network network) {
         ConfusionMatrix totalTrainingMatrix = new ConfusionMatrix(OUTPUT_LAYER_SIZE);
         ConfusionMatrix totalTestingMatrix = new ConfusionMatrix(OUTPUT_LAYER_SIZE);
@@ -106,7 +119,11 @@ public class GroupProject {
         System.out.println();
     }
 
-
+    /**
+     * Executes a single training epoch over a netowrk.
+     * @param network The network to run for a single epoch.
+     * @return The confusion matrix produced over this epoch.
+     */
     private static ConfusionMatrix executeTrainingEpoch(Network network) {
         ConfusionMatrix matrix = new ConfusionMatrix(OUTPUT_LAYER_SIZE);
         for(Input input : trainingSet) {
@@ -119,7 +136,11 @@ public class GroupProject {
         return matrix;
     } 
 
-
+    /**
+     * Executes a single testing epoch over a netowrk.
+     * @param network The network to run for a single epoch.
+     * @return The confusion matrix produced over this epoch.
+     */
     private static ConfusionMatrix executeTestingEpoch(Network network) {
         ConfusionMatrix matrix = new ConfusionMatrix(OUTPUT_LAYER_SIZE);
         for(Input input : testingSet) {
@@ -131,7 +152,12 @@ public class GroupProject {
         return matrix;
     } 
 
-
+    /**
+     * Finds the sign label whose respective label is "closest" to a predicted vector.
+     * It generates a label for a given prediction vector.
+     * @param preditedVector The prediction vector.
+     * @return The label assigned for the prediction vector.
+     */
     private static int getPredictedLabel(double[] preditedVector) {
         int predictedLabel = 0;
         double predictedDotProduct = 0;
@@ -145,17 +171,26 @@ public class GroupProject {
         return predictedLabel;
     }
 
-
-    private static double[] getSignVector(int signValue) {
+    /**
+     * Generates a vector in 26-space corresponding to a given label.
+     * @param signLabel The label of the desired vector.
+     * @return The vector corresponding to the label.
+     */
+    private static double[] getSignVector(int signLabel) {
         double[] signVector = new double[OUTPUT_LAYER_SIZE];
         for(int i = 0; i < OUTPUT_LAYER_SIZE; ++i) {
             signVector[i] = 0;
         }
-        signVector[signValue] = 1;
+        signVector[signLabel] = 1;
         return signVector;
     }
 
-
+    /**
+     * Performs a dot product over 2 "vectors".
+     * @param vector1 The first vector.
+     * @param vector2 The second vector.
+     * @return The dot product result.
+     */
     private static double dotProduct(double[] vector1, double[] vector2) {
         double sum = 0;
         for(int i = 0; i < vector1.length && i < vector1.length; ++i) {

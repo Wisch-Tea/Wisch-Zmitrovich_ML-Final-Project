@@ -1,6 +1,8 @@
 import java.util.*;
 
-
+/**
+ * Responsible for managing a convolutional neural network.
+ */
 public class CNN implements Network {
 
     private int inputLayerSize, hiddenLayerSize, outputLayerSize;

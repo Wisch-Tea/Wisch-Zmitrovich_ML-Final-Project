@@ -4,7 +4,9 @@ import java.awt.Color;
 import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
 
-
+/**
+ * Responsible for parsing in data from the archive/signs file.
+ */
 public class ImageParser {
 
     private final int DOWNSIZE_FACTOR = 8;
