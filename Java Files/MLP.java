@@ -12,9 +12,9 @@ public class MLP implements Network {
     private final double MOMENTUM_VALUE = 0.9;
 
     private int inputLayerSize, hiddenLayerSize, outputLayerSize;
+    private double[] hiddenLayer, inputLayer, outputLayer;
     private double[][] inputToHiddenWeights, hiddenToOutputWeights;
     private double[][] deltaInputToHiddenWeights, deltaHiddenToOutputWeights;
-    private double[] hiddenLayer, inputLayer, outputLayer;
 
 
     public MLP(int newInputLayerSize, int newHiddenLayerSize, int newOutputLayerSize) {
@@ -112,7 +112,7 @@ public class MLP implements Network {
         for(int i = 0; i < hiddenLayerSize; ++i) {
             double summation = 0;
             for(int j = 0; j < outputLayerSize; ++j) {
-                summation += hiddenToOutputWeights[i + 1][j] * outputError[j];
+                summation += hiddenToOutputWeights[i + 1][j] * outputError[j]; // +1 for the bias.
             }
             hiddenError[i] = hiddenLayer[i] * (1 - hiddenLayer[i]) * summation;
         }
@@ -122,7 +122,7 @@ public class MLP implements Network {
 
     private void updateHiddenToOutputWeights(double[] outputError) {
         double[] biasedHiddenLayer = getBiasedLayer(hiddenLayer);
-        for(int i = 0; i < hiddenLayerSize + 1; ++i) {
+        for(int i = 0; i < hiddenLayerSize + 1; ++i) { // +1 for the bias.
             for(int j = 0; j < outputLayerSize; ++j) {
                 double newValue = hiddenToOutputWeights[i][j] + (LEARNING_RATE * outputError[j] * biasedHiddenLayer[i]);
                 if(MOMENTUM_ENABLED == true) {
@@ -137,7 +137,7 @@ public class MLP implements Network {
 
     private void updateInputToHiddenWeights(double[] hiddenError) {
         double[] biasedInputLayer = getBiasedLayer(inputLayer);
-        for(int i = 0; i < inputLayerSize + 1; ++i) {
+        for(int i = 0; i < inputLayerSize + 1; ++i) { // +1 for the bias.
             for(int j = 0; j < hiddenLayerSize; ++j) {
                 double newValue = inputToHiddenWeights[i][j] + (LEARNING_RATE * hiddenError[j] * biasedInputLayer[i]);
                 if(MOMENTUM_ENABLED == true) {

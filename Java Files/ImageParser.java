@@ -27,7 +27,11 @@ public class ImageParser {
         return inputList.toArray(new Input[inputList.size()]);
     }
 
-
+    /**
+     * Generates a matrix of the .jpg in a file.
+     * @param file The file object of the .jpg.
+     * @return The matrix of the pixel values.
+     */
     private double[][] parseImageFromFile(File file) {
         double[][] imagePixels;
         try {
@@ -45,9 +49,17 @@ public class ImageParser {
         return imagePixels;
     }
 
-
+    /**
+     * Calculates a scaled value of a pixel from an image.
+     * @param image An image object.
+     * @param rowIndex The row index of the pixel.
+     * @param columnIndex The column index of the pixel.
+     * @return The value of the pixel scaled between 0-255;
+     */
     private double getPixelValue(BufferedImage image, int rowIndex, int columnIndex) {
         Color color = new Color(image.getRGB(columnIndex, rowIndex));
+        // The maximum value of each of the 3 RGB colors is 255.
+        // To scale the pixel between 0-255, the total RGB value must be divided by 255*3.
         return (color.getRed() + color.getGreen() + color.getBlue()) / (255 * 3);
     }
 

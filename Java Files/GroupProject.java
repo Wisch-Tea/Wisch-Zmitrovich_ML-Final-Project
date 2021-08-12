@@ -116,7 +116,6 @@ public class GroupProject {
             System.out.println("\nTotal Testing Confusion Matrix:\n");
             totalTestingMatrix.print();
         }
-        System.out.println();
     }
 
     /**
