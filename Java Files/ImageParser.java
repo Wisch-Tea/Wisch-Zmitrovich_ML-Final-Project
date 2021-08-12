@@ -63,7 +63,11 @@ public class ImageParser {
         return (color.getRed() + color.getGreen() + color.getBlue()) / (255 * 3);
     }
 
-
+    /**
+     * Resizes a matrix by taking the average of DOWNSIZE_FACTOR by DOWNSIZE_FACTOR segments.
+     * @param imageMatrix The matrix to be downsized.
+     * @return The downsized matrix.
+     */
     private double[][] downsizeImage(double[][] imageMatrix) {
         double[][] downsizedImage = new double[imageMatrix.length / DOWNSIZE_FACTOR][imageMatrix[0].length / DOWNSIZE_FACTOR];
         for(int rowIndex = 0; rowIndex < imageMatrix.length / DOWNSIZE_FACTOR; ++rowIndex) {
@@ -74,7 +78,13 @@ public class ImageParser {
         return downsizedImage;
     }
 
-
+    /**
+     * Calculates the average of the items in a segment of a matrix.
+     * @param imageMatrix The matrix.
+     * @param rowIndex 
+     * @param columnIndex
+     * @return
+     */
     private double getAverageOfImageSegment(double[][] imageMatrix, int rowIndex, int columnIndex) {
         rowIndex *= DOWNSIZE_FACTOR;
         columnIndex *= DOWNSIZE_FACTOR;

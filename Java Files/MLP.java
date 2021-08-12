@@ -1,11 +1,11 @@
 import java.util.*;
 
 /**
- * Responsible for managing a mulit-later perceptron.
+ * Responsible for managing a mulit-layer perceptron.
  */
 public class MLP implements Network {
 
-    private final boolean MOMENTUM_ENABLED = false;
+    private final boolean MOMENTUM_ENABLED = true;
 
     private final double BIAS_VALUE = 1;
     private final double LEARNING_RATE = 0.1;
@@ -128,7 +128,7 @@ public class MLP implements Network {
                 if(MOMENTUM_ENABLED == true) {
                     newValue += deltaHiddenToOutputWeights[i][j] * MOMENTUM_VALUE;
                 }
-                deltaHiddenToOutputWeights[i][j] = newValue - hiddenToOutputWeights[i][j];
+                deltaHiddenToOutputWeights[i][j] = hiddenToOutputWeights[i][j] - newValue;
                 hiddenToOutputWeights[i][j] = newValue;
             }
         }
@@ -143,7 +143,7 @@ public class MLP implements Network {
                 if(MOMENTUM_ENABLED == true) {
                     newValue += deltaInputToHiddenWeights[i][j] * MOMENTUM_VALUE;
                 }
-                deltaInputToHiddenWeights[i][j] = newValue - inputToHiddenWeights[i][j];
+                deltaInputToHiddenWeights[i][j] = inputToHiddenWeights[i][j] - newValue;
                 inputToHiddenWeights[i][j] = newValue;
             }
         }
