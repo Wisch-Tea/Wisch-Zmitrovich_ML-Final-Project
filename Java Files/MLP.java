@@ -1,7 +1,7 @@
 import java.util.*;
 
 
-public class MLP {
+public class MLP implements Network {
 
     private final boolean MOMENTUM_ENABLED = false;
 

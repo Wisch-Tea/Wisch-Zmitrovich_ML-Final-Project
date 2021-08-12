@@ -23,8 +23,27 @@ public class ConfusionMatrix {
     }
 
 
+    public void addConfusionMatrix(ConfusionMatrix toAdd) {
+        for(int rowIndex = 0; rowIndex < matrix.length; ++rowIndex) {
+            for(int columnIndex = 0; columnIndex < matrix.length; ++columnIndex) {
+                matrix[rowIndex][columnIndex] += toAdd.matrix[rowIndex][columnIndex];
+            }
+        }
+    }
+
+
     public double getAccuracy() {
         return (double)(sumPositives()) / (double)(sumPositives() + sumNegatives());
+    }
+
+
+    public void print() {
+        for(int rowIndex = 0; rowIndex < matrix.length; ++rowIndex) {
+            for(int columnIndex = 0; columnIndex < matrix.length; ++columnIndex) {
+                System.out.print("\t" + matrix[rowIndex][columnIndex]);
+            }
+            System.out.println();
+        }
     }
 
 
