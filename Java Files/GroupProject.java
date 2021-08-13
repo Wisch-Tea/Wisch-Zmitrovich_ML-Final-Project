@@ -66,7 +66,7 @@ public class GroupProject {
         filterMatrices.add(new double[][] {{ 0, 0, 0}, 
                                            { 1, 1, 1}, 
                                            {-1,-1,-1}});
-/*
+
         // Left side edge:
         filterMatrices.add(new double[][] {{-1, 1, 0}, 
                                            {-1, 1, 0}, 
@@ -93,7 +93,7 @@ public class GroupProject {
         filterMatrices.add(new double[][] {{ 1,-1,-1}, 
                                            { 0, 1,-1}, 
                                            { 0, 0, 1}});
-*/
+
         Filter[] filterSet = new Filter[filterMatrices.size()];
         for(int i = 0; i < filterMatrices.size(); ++i) {
             filterSet[i] = new Filter(filterMatrices.get(i));

@@ -126,7 +126,7 @@ public class ImageParser {
     public void printImage(double[][] matrix) {
         for(int rowIndex = 0; rowIndex < matrix.length; ++rowIndex) {
             for(int columnIndex = 0; columnIndex < matrix.length; ++columnIndex) {
-                System.out.print(" " + (int)matrix[rowIndex][columnIndex]);
+                System.out.print(" " + matrix[rowIndex][columnIndex]);
             }
             System.out.println();
         }
