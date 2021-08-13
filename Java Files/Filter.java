@@ -24,7 +24,7 @@ public class Filter {
                 filteredMatrix[rowIndex][columnIndex] = applyFilterToMatrixSegment(matrix, rowIndex, columnIndex);
             }
         }
-        return parser.getArrayFromMatrix(addPaddingLayer(filteredMatrix));
+        return parser.getArrayFromMatrix(filteredMatrix);
     }
 
 

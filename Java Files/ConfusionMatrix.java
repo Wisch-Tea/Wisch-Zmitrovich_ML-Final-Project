@@ -44,7 +44,7 @@ public class ConfusionMatrix {
     public void print() {
         for(int rowIndex = 0; rowIndex < matrix.length; ++rowIndex) {
             for(int columnIndex = 0; columnIndex < matrix.length; ++columnIndex) {
-                System.out.print("\t" + matrix[rowIndex][columnIndex]);
+                System.out.print("\t " + matrix[rowIndex][columnIndex]);
             }
             System.out.println();
         }

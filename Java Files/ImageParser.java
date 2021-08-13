@@ -8,9 +8,6 @@ import javax.imageio.ImageIO;
  * Responsible for parsing in data from the archive/signs file.
  */
 public class ImageParser {
-
-    private final int DOWNSIZE_FACTOR = 8;
-
     
     public ImageParser() {}
 
@@ -20,7 +17,7 @@ public class ImageParser {
         for(int signValue = 0; signValue < 26; ++signValue) {
             File folder = new File(imagesFolderPath + "/" + signValue);
             for(File currentFile : folder.listFiles()) {
-                double[] imageData = getArrayFromMatrix(downsizeImage(parseImageFromFile(currentFile)));
+                double[] imageData = getArrayFromMatrix(downsizeImage(parseImageFromFile(currentFile), 8));
                 inputList.add(new Input(imageData, signValue));
             }
         }
@@ -68,11 +65,11 @@ public class ImageParser {
      * @param imageMatrix The matrix to be downsized.
      * @return The downsized matrix.
      */
-    private double[][] downsizeImage(double[][] imageMatrix) {
-        double[][] downsizedImage = new double[imageMatrix.length / DOWNSIZE_FACTOR][imageMatrix[0].length / DOWNSIZE_FACTOR];
-        for(int rowIndex = 0; rowIndex < imageMatrix.length / DOWNSIZE_FACTOR; ++rowIndex) {
-            for(int columnIndex = 0; columnIndex < imageMatrix[0].length / DOWNSIZE_FACTOR; ++columnIndex) {
-                downsizedImage[rowIndex][columnIndex] = getAverageOfImageSegment(imageMatrix, rowIndex, columnIndex);
+    public double[][] downsizeImage(double[][] imageMatrix, int downsizeFactor) {
+        double[][] downsizedImage = new double[imageMatrix.length / downsizeFactor][imageMatrix[0].length / downsizeFactor];
+        for(int rowIndex = 0; rowIndex < imageMatrix.length / downsizeFactor; ++rowIndex) {
+            for(int columnIndex = 0; columnIndex < imageMatrix[0].length / downsizeFactor; ++columnIndex) {
+                downsizedImage[rowIndex][columnIndex] = getAverageOfImageSegment(imageMatrix, rowIndex, columnIndex, downsizeFactor);
             }
         }
         return downsizedImage;
@@ -85,16 +82,16 @@ public class ImageParser {
      * @param columnIndex
      * @return
      */
-    private double getAverageOfImageSegment(double[][] imageMatrix, int rowIndex, int columnIndex) {
-        rowIndex *= DOWNSIZE_FACTOR;
-        columnIndex *= DOWNSIZE_FACTOR;
+    private double getAverageOfImageSegment(double[][] imageMatrix, int rowIndex, int columnIndex, int downsizeFactor) {
+        rowIndex *= downsizeFactor;
+        columnIndex *= downsizeFactor;
         double sum = 0;
-        for(int i = rowIndex; i < rowIndex + DOWNSIZE_FACTOR; ++i) {
-            for(int j = columnIndex; j < columnIndex + DOWNSIZE_FACTOR; ++j) {
+        for(int i = rowIndex; i < rowIndex + downsizeFactor; ++i) {
+            for(int j = columnIndex; j < columnIndex + downsizeFactor; ++j) {
                 sum += imageMatrix[i][j];
             }
         }
-        return sum / (DOWNSIZE_FACTOR * DOWNSIZE_FACTOR);
+        return sum / (downsizeFactor * downsizeFactor);
     }
 
 
@@ -122,5 +119,16 @@ public class ImageParser {
             }
         }
         return matrix;
+    }
+
+    
+    // Testing:
+    public void printImage(double[][] matrix) {
+        for(int rowIndex = 0; rowIndex < matrix.length; ++rowIndex) {
+            for(int columnIndex = 0; columnIndex < matrix.length; ++columnIndex) {
+                System.out.print(" " + (int)matrix[rowIndex][columnIndex]);
+            }
+            System.out.println();
+        }
     }
 }

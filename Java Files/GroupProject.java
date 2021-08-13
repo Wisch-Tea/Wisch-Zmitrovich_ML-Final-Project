@@ -10,7 +10,8 @@ public class GroupProject {
     private static final int INPUT_LAYER_SIZE = 32 * 32;
     private static final int HIDDEN_LAYER_SIZE = 100;
     private static final int OUTPUT_LAYER_SIZE = 26;
-    private static final int EPOCH_AMOUNT = 50;
+    private static final int EPOCH_AMOUNT = 25;
+    private static final int FILTER_APPLICATION_AMOUNT = 1;
 
     private static Input[] trainingSet, testingSet;
     
@@ -20,6 +21,17 @@ public class GroupProject {
     //             [ARGUMENTS]: "MLP" for MLP execution, and "CNN" for CNN execution.
 
     public static void main(String[] args) {
+        if(args == null || args.length == 0) {
+            System.out.println("No arguments provided.");
+            return;
+        }
+
+        System.out.println("\nRun info:");
+        System.out.println("\t        Hidden layer size: " + HIDDEN_LAYER_SIZE);
+        System.out.println("\t        Amount of filters: " + getFilterSet().length);
+        System.out.println("\tFilter application amount: " + FILTER_APPLICATION_AMOUNT);
+        System.out.println("\t         Amount of epochs: " + EPOCH_AMOUNT);
+
         System.out.println("\nBuilding training and testing sets...");
         initializeTrainingAndTestingSets();
         System.out.println("\nFinished building training and testing sets.");
@@ -31,10 +43,59 @@ public class GroupProject {
                 System.out.println("\nFinished MLP execution.\n");
             } else if(arg.toUpperCase().equals("CNN")) {
                 System.out.println("\nBeginning CNN execution...");
-                executeEpochs(new CNN(INPUT_LAYER_SIZE, HIDDEN_LAYER_SIZE, OUTPUT_LAYER_SIZE, getFilterSet()));
+                executeEpochs(new CNN(INPUT_LAYER_SIZE, HIDDEN_LAYER_SIZE, OUTPUT_LAYER_SIZE, getFilterSet(), FILTER_APPLICATION_AMOUNT));
                 System.out.println("\nFinished CNN execution.\n");
             }
         }
+    }
+
+    /**
+     * Generates a set of filters for a CNN.
+     * @return A list of filters.
+     */
+    private static Filter[] getFilterSet() {
+        Vector<double[][]> filterMatrices = new Vector<>();
+
+        // Comment-out which filters are to be used or unused:
+
+        // Top edge:
+        filterMatrices.add(new double[][] {{-1,-1,-1}, 
+                                           { 1, 1, 1}, 
+                                           { 0, 0, 0}});
+        // Bottom edge:
+        filterMatrices.add(new double[][] {{ 0, 0, 0}, 
+                                           { 1, 1, 1}, 
+                                           {-1,-1,-1}});
+        // Left side edge:
+        filterMatrices.add(new double[][] {{-1, 1, 0}, 
+                                           {-1, 1, 0}, 
+                                           {-1, 1, 0}});
+        // Right side edge:
+        filterMatrices.add(new double[][] {{ 0, 1,-1}, 
+                                           { 0, 1,-1}, 
+                                           { 0, 1,-1}});
+        // Upper-left side edge:
+        filterMatrices.add(new double[][] {{-1,-1, 1}, 
+                                           {-1, 1, 0}, 
+                                           { 1, 0, 0}});
+        // Lower-right side edge:
+        filterMatrices.add(new double[][] {{ 0, 0, 1}, 
+                                           { 0, 1,-1}, 
+                                           { 1,-1,-1}});
+        // Lower-left side edge:
+        filterMatrices.add(new double[][] {{ 1, 0, 0}, 
+                                           {-1, 1, 0}, 
+                                           {-1,-1, 1}});
+        // Upper-right side edge:
+        filterMatrices.add(new double[][] {{ 1,-1,-1}, 
+                                           { 0, 1,-1}, 
+                                           { 0, 0, 1}});
+
+        Filter[] filterSet = new Filter[filterMatrices.size()];
+        for(int i = 0; i < filterMatrices.size(); ++i) {
+            filterSet[i] = new Filter(filterMatrices.get(i));
+        }
+        return filterSet;
     }
 
     /**
@@ -61,31 +122,6 @@ public class GroupProject {
         List<Input> inputList = Arrays.asList(inputs);
         Collections.shuffle(inputList);
         return inputList.toArray(new Input[inputList.size()]);
-    }
-
-    /**
-     * Generates a set of filters for a CNN.
-     * @return A list of filters.
-     */
-    private static Filter[] getFilterSet() {
-        Vector<double[][]> filterMatrices = new Vector<>(4);
-        filterMatrices.add(new double[][] {{0,0,0}, 
-                                           {1,1,1}, 
-                                           {0,0,0}});
-        filterMatrices.add(new double[][] {{0,1,0}, 
-                                           {0,1,0}, 
-                                           {0,1,0}});
-        filterMatrices.add(new double[][] {{1,0,0}, 
-                                           {0,1,0}, 
-                                           {0,0,1}});
-        filterMatrices.add(new double[][] {{0,0,1}, 
-                                           {0,1,0}, 
-                                           {1,0,0}});
-        Filter[] filterSet = new Filter[filterMatrices.size()];
-        for(int i = 0; i < filterMatrices.size(); ++i) {
-            filterSet[i] = new Filter(filterMatrices.get(i));
-        }
-        return filterSet;
     }
 
     /**
