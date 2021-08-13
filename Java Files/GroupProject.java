@@ -27,10 +27,10 @@ public class GroupProject {
         }
 
         System.out.println("\nRun info:");
-        System.out.println("\t        Hidden layer size: " + HIDDEN_LAYER_SIZE);
-        System.out.println("\t        Amount of filters: " + getFilterSet().length);
-        System.out.println("\tFilter application amount: " + FILTER_APPLICATION_AMOUNT);
-        System.out.println("\t         Amount of epochs: " + EPOCH_AMOUNT);
+        System.out.println("    Amount of epochs: " + EPOCH_AMOUNT);
+        System.out.println("   Hidden layer size: " + HIDDEN_LAYER_SIZE);
+        System.out.println("   Amount of filters: " + getFilterSet().length);
+        System.out.println("  Application amount: " + FILTER_APPLICATION_AMOUNT);
 
         System.out.println("\nBuilding training and testing sets...");
         initializeTrainingAndTestingSets();
@@ -66,6 +66,7 @@ public class GroupProject {
         filterMatrices.add(new double[][] {{ 0, 0, 0}, 
                                            { 1, 1, 1}, 
                                            {-1,-1,-1}});
+/*
         // Left side edge:
         filterMatrices.add(new double[][] {{-1, 1, 0}, 
                                            {-1, 1, 0}, 
@@ -74,6 +75,7 @@ public class GroupProject {
         filterMatrices.add(new double[][] {{ 0, 1,-1}, 
                                            { 0, 1,-1}, 
                                            { 0, 1,-1}});
+
         // Upper-left side edge:
         filterMatrices.add(new double[][] {{-1,-1, 1}, 
                                            {-1, 1, 0}, 
@@ -82,6 +84,7 @@ public class GroupProject {
         filterMatrices.add(new double[][] {{ 0, 0, 1}, 
                                            { 0, 1,-1}, 
                                            { 1,-1,-1}});
+
         // Lower-left side edge:
         filterMatrices.add(new double[][] {{ 1, 0, 0}, 
                                            {-1, 1, 0}, 
@@ -90,7 +93,7 @@ public class GroupProject {
         filterMatrices.add(new double[][] {{ 1,-1,-1}, 
                                            { 0, 1,-1}, 
                                            { 0, 0, 1}});
-
+*/
         Filter[] filterSet = new Filter[filterMatrices.size()];
         for(int i = 0; i < filterMatrices.size(); ++i) {
             filterSet[i] = new Filter(filterMatrices.get(i));

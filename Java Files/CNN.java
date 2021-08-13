@@ -18,7 +18,6 @@ public class CNN implements Network {
 
 
     public CNN(int newInputLayerSize, int newHiddenLayerSize, int newOutputLayerSize, Filter[] newFilterSet, int newFilterApplicationAmount) {
-
         inputLayerSize = newInputLayerSize;
         hiddenLayerSize = newHiddenLayerSize;
         outputLayerSize = newOutputLayerSize;
