@@ -142,7 +142,7 @@ public class GroupProject {
             ConfusionMatrix trainingMatrix = executeTrainingEpoch(network);
             ConfusionMatrix testingMatrix = executeTestingEpoch(network);
             System.out.print("\t  " + (i + 1) + "\t\t ");
-            System.out.print(trainingMatrix.getAccuracy() + "\t\t\t ");
+            System.out.print(trainingMatrix.getAccuracy() + "\t\t ");
             System.out.println(testingMatrix.getAccuracy());
             totalTrainingMatrix.addConfusionMatrix(trainingMatrix);
             totalTestingMatrix.addConfusionMatrix(testingMatrix);
