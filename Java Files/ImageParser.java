@@ -11,7 +11,14 @@ public class ImageParser {
     
     public ImageParser() {}
 
-
+    /**
+     * Creates a new <code>parseImages</code> parser that can take an image's path, convert it to
+     * a 2-D matrix based on the pixel RGB data, downsize the image through averaging the 2-D image matrix
+     * segments, convert a 2-D matrix to 1-D, and vice-versa convert a 1-D matrix to 2-D.
+     *
+     * @param imagesFolderPath
+     *     The containing folder string path name to be read from.
+     */
     public Input[] parseImages(String imagesFolderPath) {
         List<Input> inputList = new ArrayList<>();
         for(int signValue = 0; signValue < 26; ++signValue) {
@@ -62,8 +69,8 @@ public class ImageParser {
 
     /**
      * Resizes a matrix by taking the average of DOWNSIZE_FACTOR by DOWNSIZE_FACTOR segments.
-     * @param imageMatrix The matrix to be downsized.
-     * @return The downsized matrix.
+     * @param imageMatrix The 2-D matrix to be downsized.
+     * @return The downsized 2-D matrix.
      */
     public double[][] downsizeImage(double[][] imageMatrix, int downsizeFactor) {
         double[][] downsizedImage = new double[imageMatrix.length / downsizeFactor][imageMatrix[0].length / downsizeFactor];
@@ -77,7 +84,7 @@ public class ImageParser {
 
     /**
      * Calculates the average of the items in a segment of a matrix.
-     * @param imageMatrix The matrix.
+     * @param imageMatrix The 2-D image matrix.
      * @param rowIndex 
      * @param columnIndex
      * @return
@@ -95,6 +102,12 @@ public class ImageParser {
     }
 
 
+    /* 
+    * Pass in a 2-D image matrix and convert it to a 1-D array that has the squared value of
+    * [n] dimensionality that's taken from the 2-D array's [n x n] dimension values (square
+    * the 'n' value from the 2-D matrix/array to get the 1-D array length).
+    * @param imageMatrix The 2-D image matrix.
+    */
     public double[] getArrayFromMatrix(double[][] imageMatrix) {
         double[] array = new double[imageMatrix.length * imageMatrix[0].length];
         int indexCount = 0;
@@ -107,7 +120,11 @@ public class ImageParser {
         return array;
     }
 
-
+    /* 
+    * Pass in a 1-D image array and convert it to a 2-D matrix that has the square-root of 
+    * the 1-D array's 'n' dimensionality as [n x n] dimensions of the new 2-D matrix (i.e.
+    * sqrt(4) would give 2, so the newly created 2-D matrix would have the dimensions [2 x 2]).
+    */
     public double[][] getMatrixFromArray(double[] imageArray) {
         int dimension = (int)Math.sqrt(imageArray.length);
         double[][] matrix = new double[dimension][dimension];
@@ -122,7 +139,7 @@ public class ImageParser {
     }
 
     
-    // Testing:
+    // Testing method to print the passed in 2-D matrix/array:
     public void printImage(double[][] matrix) {
         for(int rowIndex = 0; rowIndex < matrix.length; ++rowIndex) {
             for(int columnIndex = 0; columnIndex < matrix.length; ++columnIndex) {

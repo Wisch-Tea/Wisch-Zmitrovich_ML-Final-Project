@@ -1,6 +1,15 @@
 import java.util.*;
 
-
+/**
+ * This class represents the main .java file used to call and run the neural network
+ * training models for a 445 - Machine Learning Group Final Project on an American
+ * Sign Language image dataset. What is illustrated to the user includes the
+ * training/testing accuracy per epoch and a confusion matrix for the total
+ * training/testing accuracy over all epochs.
+ * The neural network models that can be used through calling this Java file are:
+ *      - A Convoluted Neural Network (CNN)
+ *      - A Multi-Layer Perceptron (MLP/Deep Feedforward Neural Network)
+ */
 public class GroupProject {
 
     private static final boolean TOTAL_CONFUSION_MATRIX_PRINTING_ENABLED = true;
@@ -8,13 +17,14 @@ public class GroupProject {
     private static final String IMAGES_FOLDER_PATH = "archive/signs";
 
     private static final int INPUT_LAYER_SIZE = 32 * 32;
-    private static final int HIDDEN_LAYER_SIZE = 100;
+    private static final int HIDDEN_LAYER_SIZE = 50;
     private static final int OUTPUT_LAYER_SIZE = 26;
     private static final int EPOCH_AMOUNT = 25;
     private static final int FILTER_APPLICATION_AMOUNT = 1;
 
     private static Input[] trainingSet, testingSet;
     
+    // ==================================== TERMINAL/CMD USAGE ====================================
     // Remove old .class files: rm *.class
     //            Compile with: javac GroupProject.java
     //                Run with: java GroupProject [ARGUEMNTS]
@@ -36,6 +46,7 @@ public class GroupProject {
         initializeTrainingAndTestingSets();
         System.out.println("\nFinished building training and testing sets.");
 
+        // Read the provided command line arguments to determine whether to train an MLP model, a CNN model, or both.
         for(String arg : args) {
             if(arg.toUpperCase().equals("MLP")) {
                 System.out.println("\nBeginning MLP execution...");
@@ -56,7 +67,7 @@ public class GroupProject {
     private static Filter[] getFilterSet() {
         Vector<double[][]> filterMatrices = new Vector<>();
 
-        // Comment-out which filters are to be used or unused:
+        // Comment-out which pairs of filters are to be used or unused in filtering process:
 
         // Top edge:
         filterMatrices.add(new double[][] {{-1,-1,-1}, 
@@ -93,7 +104,8 @@ public class GroupProject {
         filterMatrices.add(new double[][] {{ 1,-1,-1}, 
                                            { 0, 1,-1}, 
                                            { 0, 0, 1}});
-
+/**/
+        // Create a 1-D array of 2-D filter arrays.
         Filter[] filterSet = new Filter[filterMatrices.size()];
         for(int i = 0; i < filterMatrices.size(); ++i) {
             filterSet[i] = new Filter(filterMatrices.get(i));
@@ -102,7 +114,8 @@ public class GroupProject {
     }
 
     /**
-     * Sets up the training and testing sets.
+     * Sets up the training and testing sets from randomly selected inputs from the input folder.
+     * The input data is split 60:40 for training and testing sets respectively.
      * Uses ImageParser to parse date from archive/signs.
      */
     private static void initializeTrainingAndTestingSets() {
