@@ -42,7 +42,7 @@ public class CNN implements Network {
 
 
     /**
-     * Passes input data forward through the convoluted neural network.
+     * Passes input data forward through the convolutional neural network.
      *
      * @param input
      *     Input image data object that contains pixel data and an associated label to propagate forward.
@@ -77,7 +77,7 @@ public class CNN implements Network {
     }
 
     /**
-     * Passes target classification data backwards through the convoluted neural network.
+     * Passes target classification data backwards through the convolutional neural network.
      *
      * @param target
      *     1-D doubles array of target classification values to propagate backwards through the neural network.

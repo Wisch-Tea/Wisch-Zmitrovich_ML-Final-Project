@@ -9,7 +9,7 @@ public class Filter {
     double[][] filterMatrix;
 
     /**
-     * Creates a new Convoluted Neural Network <code>Filter</code> from a passed in 2-D matrix/array
+     * Creates a new Convolutional Neural Network <code>Filter</code> from a passed in 2-D matrix/array
      * to be used in creating the filter matrix.
      *
      * @param newFilterMatrix

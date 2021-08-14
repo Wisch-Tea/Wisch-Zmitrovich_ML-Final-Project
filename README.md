@@ -3,7 +3,7 @@
 
  Description:
     This program can train one of two neural network types: A Multi-Layer/Deep
-    Feedforward Neural Network or a Convoluted Neural Network. They both train
+    Feedforward Neural Network or a Convolutional Neural Network. They both train
     models using back propagation on ~26,000 images of American Sign Language
     (ASL) hand signs, where there are ~1,000 images per alphabetic character.
     This data is randomized and split 60:40 between training and testing data

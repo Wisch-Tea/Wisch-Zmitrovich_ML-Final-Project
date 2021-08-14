@@ -7,7 +7,7 @@ import java.util.*;
  * training/testing accuracy per epoch and a confusion matrix for the total
  * training/testing accuracy over all epochs.
  * The neural network models that can be used through calling this Java file are:
- *      - A Convoluted Neural Network (CNN)
+ *      - A Convolutional Neural Network (CNN)
  *      - A Multi-Layer Perceptron (MLP/Deep Feedforward Neural Network)
  */
 public class GroupProject {
